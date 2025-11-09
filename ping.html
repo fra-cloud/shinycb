@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ping.html - Francesco Biasi</title>
+<style>
+body { 
+    font-family: "Source Code Pro", monospace; 
+    margin: 20px; 
+    background: #fff; 
+    color: #000; 
+    line-height: 1.3;
+    font-size: 12px;
+}
+a { color: #000; font-size: 12px; }
+a:visited { color: #000; }
+h1 { font-size: 14px; font-weight: bold; margin: 0 0 20px 0; }
+h1 a { text-decoration: none; font-size: 14px; }
+h2 { font-size: 12px; font-weight: normal; margin: 20px 0 10px 0; }
+p { font-size: 12px; margin: 0 0 10px 0; }
+.nav { margin: 0 0 30px 0; }
+.nav a { margin-right: 15px; text-decoration: underline; font-size: 12px; }
+
+@media (max-width: 600px) {
+    body { margin: 15px; }
+    h1 { font-size: 16px; }
+    h1 a { font-size: 16px; }
+    h2, p, a { font-size: 14px; }
+    .nav a { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<h1><a href="index.html">Francesco Biasi</a></h1>
+
+<div class="nav">
+<a href="about.html">about</a>
+<a href="outputs.html">outputs</a>
+<a href="phd.html">phd</a>
+<a href="links.html">links</a>
+<a href="ping.html">ping</a>
+</div>
+
+<h2>ping.html</h2>
+
+<p>Contact information and ways to reach out.</p>
+
+<script>
+// minimal random navigation
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'r' && e.ctrlKey) {
+        e.preventDefault();
+        const pages = [
+            'about.html',
+            'outputs.html',
+            'phd.html',
+            'links.html',
+            'ping.html',
+            'projects/project1.html',
+            'projects/project2.html',
+            'projects/project3.html',
+            'projects/project4.html',
+            'phd-details.html'
+        ];
+        const random = pages[Math.floor(Math.random() * pages.length)];
+        window.location.href = random;
+    }
+});
+</script>
+
+</body>
+</html>

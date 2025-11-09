@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Francesco Biasi</title>
+<style>
+body { 
+    font-family: "Source Code Pro", monospace; 
+    margin: 20px; 
+    background: #fff; 
+    color: #000; 
+    line-height: 1.4;
+    font-size: 12px;
+}
+a { 
+    color: #000; 
+    text-decoration: underline;
+    font-size: 12px;
+}
+a:visited { color: #000; }
+h1 { 
+    font-size: 14px; 
+    font-weight: bold; 
+    margin: 0 0 20px 0; 
+}
+p { 
+    font-size: 12px; 
+    margin: 0 0 15px 0; 
+}
+.links { 
+    margin: 20px 0; 
+}
+.links a {
+    display: block;
+    margin: 8px 0;
+    font-size: 12px;
+}
+.links a[href="statisfy.html"],
+.links a[onclick*="randomPage"] {
+    color: #0066ff;
+}
+
+@media (max-width: 600px) {
+    body { margin: 15px; }
+    h1 { font-size: 16px; }
+    p, a { font-size: 14px; }
+    .links a { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<h1>Francesco Biasi</h1>
+
+<p>Welcome. A cyborg form of life released in 1988.</p>
+
+<div class="links">
+<a href="about.html">about</a>
+<a href="outputs.html">outputs</a>
+<a href="phd.html">phd</a>
+<a href="links.html">links</a>
+<a href="ping.html">ping</a>
+<a href="statisfy.html">👁️ statisfy.exe</a>
+<a href="#" onclick="randomPage(); return false;">🎲 random page</a>
+</div>
+
+<script>
+function randomPage() {
+    const pages = [
+        'about.html',
+        'outputs.html',
+        'phd.html',
+        'links.html',
+        'ping.html',
+        'projects/project1.html',
+        'projects/project2.html',
+        'projects/project3.html',
+        'projects/project4.html',
+        'phd-details.html',
+        'statisfy.html'
+    ];
+    const random = pages[Math.floor(Math.random() * pages.length)];
+    window.location.href = random;
+}
+
+// keyboard shortcut
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'r' && e.ctrlKey) {
+        e.preventDefault();
+        randomPage();
+    }
+});
+</script>
+
+</body>
+</html>

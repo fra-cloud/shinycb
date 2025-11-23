@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Francesco Biasi</title>
 <style>
-body {
-    font-family: "Source Code Pro", monospace;
-    margin: 20px;
-    background: #fff;
-    color: #000;
+body { 
+    font-family: "Courier New", "Lucida Console", monospace; 
+    margin: 20px; 
+    background: #001100; 
+    color: #00ff00; 
     line-height: 1.4;
     font-size: 12px;
 }
@@ -24,16 +24,17 @@ body {
     opacity: 0.3;
     transition: opacity 0.3s;
     z-index: 1000;
+    color: #00ff00;
 }
 .matrix-toggle:hover {
     opacity: 1;
 }
 a { 
-    color: #000; 
+    color: #00ff00; 
     text-decoration: underline;
     font-size: 12px;
 }
-a:visited { color: #000; }
+a:visited { color: #00cc00; }
 h1 { 
     font-size: 14px; 
     font-weight: bold; 
@@ -51,9 +52,9 @@ p {
     margin: 8px 0;
     font-size: 12px;
 }
-.links a[href="statisfy.html"],
+.links a[href="matrix-statisfy.html"],
 .links a[onclick*="randomPage"] {
-    color: #0066ff;
+    color: #00ffff;
 }
 
 @media (max-width: 600px) {
@@ -66,46 +67,45 @@ p {
 </head>
 <body>
 
-<button class="matrix-toggle" onclick="toggleMatrix()" title="">[alt]</button>
+<button class="matrix-toggle" onclick="toggleNormal()" title="">[alt]</button>
 
-<h1>Francesco Biasi</h1>
+<h1>Francesco Biasi alt_mode</h1>
 
-<p>Welcome. A cyborg form of life released in 1988.</p>
+<p>WELCOME. A DIGITAL ENTITY SPAWNED IN 1988.</p>
 
 <div class="links">
-<a href="about.html">about</a>
-<a href="outputs.html">outputs</a>
-<a href="phd.html">phd</a>
-<a href="links.html">links</a>
-<a href="ping.html">ping</a>
-<a href="statisfy.html">👁️ statisfy.exe</a>
-<a href="#" onclick="randomPage(); return false;">🎲 random page</a>
+<a href="matrix-about.html">system_info</a>
+<a href="matrix-outputs.html">data_streams</a>
+<a href="matrix-phd.html">research_protocols</a>
+<a href="matrix-links.html">nodes_out</a>
+<a href="matrix-ping.html">connection_test</a>
+<a href="#" onclick="randomPage(); return false;">🎲 random_access</a>
 </div>
 
 <script>
 function randomPage() {
     const pages = [
-        'about.html',
-        'outputs.html',
-        'phd.html',
-        'links.html',
-        'ping.html',
-        'projects/project1.html',
-        'projects/project2.html',
-        'projects/project3.html',
-        'projects/project4.html',
-        'phd-details.html',
-        'statisfy.html'
+        'matrix-about.html',
+        'matrix-outputs.html',
+        'matrix-phd.html',
+        'matrix-links.html',
+        'matrix-ping.html',
+        'matrix-projects/project1.html',
+        'matrix-projects/project2.html',
+        'matrix-projects/project3.html',
+        'matrix-projects/project4.html',
+        'matrix-phd-details.html',
+        'matrix-statisfy.html'
     ];
     const random = pages[Math.floor(Math.random() * pages.length)];
     window.location.href = random;
 }
 
-function toggleMatrix() {
-    // Store current page in localStorage to remember matrix mode
-    localStorage.setItem('matrixMode', 'true');
-    // Redirect to matrix version
-    window.location.href = 'matrix-index.html';
+function toggleNormal() {
+    // Remove matrix mode from localStorage
+    localStorage.removeItem('matrixMode');
+    // Redirect to normal version
+    window.location.href = 'index.html';
 }
 
 // keyboard shortcut

@@ -5,13 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>phd.html - Francesco Biasi</title>
 <style>
-body { 
-    font-family: "Source Code Pro", monospace; 
-    margin: 20px; 
-    background: #fff; 
-    color: #000; 
+body {
+    font-family: "Source Code Pro", monospace;
+    margin: 20px;
+    background: #fff;
+    color: #000;
     line-height: 1.3;
     font-size: 12px;
+}
+.matrix-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+.matrix-toggle:hover {
+    opacity: 1;
 }
 a { color: #000; font-size: 12px; }
 a:visited { color: #000; }
@@ -37,6 +52,8 @@ p { font-size: 12px; margin: 0 0 10px 0; }
 </style>
 </head>
 <body>
+
+<button class="matrix-toggle" onclick="toggleMatrix()" title="">[alt]</button>
 
 <h1><a href="index.html">Francesco Biasi</a></h1>
 
@@ -68,6 +85,11 @@ p { font-size: 12px; margin: 0 0 10px 0; }
 <p><span class="system">EDUCATION_LEVEL: doctoral_candidate</span></p>
 
 <script>
+function toggleMatrix() {
+    localStorage.setItem('matrixMode', 'true');
+    window.location.href = 'matrix-phd.html';
+}
+
 // minimal random navigation
 document.addEventListener('keydown', function(e) {
     if (e.key === 'r' && e.ctrlKey) {

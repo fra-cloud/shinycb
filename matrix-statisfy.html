@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>👁️ statisfy.exe - Francesco Biasi</title>
+<title>👁️ neural_network.exe - Francesco Biasi</title>
 <style>
 body {
-    font-family: "Source Code Pro", monospace;
+    font-family: "Courier New", "Lucida Console", monospace;
     margin: 20px;
-    background: #fff;
-    color: #000;
+    background: #001100;
+    color: #00ff00;
     line-height: 1.3;
     font-size: 12px;
 }
@@ -24,15 +24,16 @@ body {
     opacity: 0.3;
     transition: opacity 0.3s;
     z-index: 1000;
+    color: #00ff00;
 }
 .matrix-toggle:hover {
     opacity: 1;
 }
-a { color: #000; font-size: 12px; }
-a:visited { color: #000; }
+a { color: #00ff00; font-size: 12px; }
+a:visited { color: #00cc00; }
 h1 { font-size: 14px; font-weight: bold; margin: 0 0 20px 0; }
 h1 a { text-decoration: none; font-size: 14px; }
-h2 { font-size: 12px; font-weight: normal; margin: 20px 0 10px 0; color: #0066ff; }
+h2 { font-size: 12px; font-weight: normal; margin: 20px 0 10px 0; color: #00ffff; }
 .nav { margin: 0 0 30px 0; }
 .nav a { margin-right: 15px; text-decoration: underline; font-size: 12px; }
 .gif-container {
@@ -42,6 +43,7 @@ h2 { font-size: 12px; font-weight: normal; margin: 20px 0 10px 0; color: #0066ff
 .gif-container img {
     max-width: 100%;
     height: auto;
+    filter: hue-rotate(120deg) saturate(2);
 }
 
 @media (max-width: 600px) {
@@ -56,28 +58,28 @@ h2 { font-size: 12px; font-weight: normal; margin: 20px 0 10px 0; color: #0066ff
 </head>
 <body>
 
-<button class="matrix-toggle" onclick="toggleMatrix()" title="">[alt]</button>
+<button class="matrix-toggle" onclick="toggleNormal()" title="">[alt]</button>
 
-<h1><a href="index.html">Francesco Biasi</a></h1>
+<h1><a href="matrix-index.html">Francesco Biasi alt_mode</a></h1>
 
 <div class="nav">
-<a href="about.html">about</a>
-<a href="outputs.html">outputs</a>
-<a href="phd.html">phd</a>
-<a href="links.html">links</a>
-<a href="ping.html">ping</a>
+<a href="matrix-about.html">system_info</a>
+<a href="matrix-outputs.html">data_streams</a>
+<a href="matrix-phd.html">research_protocols</a>
+<a href="matrix-links.html">nodes_out</a>
+<a href="matrix-ping.html">connection_test</a>
 </div>
 
-<h2>👁️ statisfy.exe</h2>
+<h2>👁️ neural_network.exe</h2>
 
 <div class="gif-container">
-<img src="statisfy.gif" alt="statisfy">
+<img src="statisfy.gif" alt="neural_network_visualization">
 </div>
 
 <script>
-function toggleMatrix() {
-    localStorage.setItem('matrixMode', 'true');
-    window.location.href = 'matrix-statisfy.html';
+function toggleNormal() {
+    localStorage.removeItem('matrixMode');
+    window.location.href = 'statisfy.html';
 }
 
 // minimal random navigation
@@ -85,17 +87,17 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'r' && e.ctrlKey) {
         e.preventDefault();
         const pages = [
-            'about.html',
-            'outputs.html',
-            'phd.html',
-            'links.html',
-            'ping.html',
-            'projects/project1.html',
-            'projects/project2.html',
-            'projects/project3.html',
-            'projects/project4.html',
-            'phd-details.html',
-            'statisfy.html'
+            'matrix-about.html',
+            'matrix-outputs.html',
+            'matrix-phd.html',
+            'matrix-links.html',
+            'matrix-ping.html',
+            'matrix-projects/project1.html',
+            'matrix-projects/project2.html',
+            'matrix-projects/project3.html',
+            'matrix-projects/project4.html',
+            'matrix-phd-details.html',
+            'matrix-statisfy.html'
         ];
         const random = pages[Math.floor(Math.random() * pages.length)];
         window.location.href = random;

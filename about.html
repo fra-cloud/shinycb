@@ -118,6 +118,14 @@ body.matrix-mode .timestamp {
     color: #00aa00;
 }
 
+#bio {
+    transition: opacity 0.15s ease;
+}
+
+#bio.fade {
+    opacity: 0.3;
+}
+
 @media (max-width: 600px) {
     body { margin: 15px; }
     h1 { font-size: 16px; }
@@ -145,9 +153,76 @@ body.matrix-mode .timestamp {
 
 <p class="timestamp">Last updated: 2024.11.08</p>
 
-<p>A cyborg form of life, Francesco Biasi was released in 1988 as an evolving software - hardware system. Since then, FB enjoys reading, playing video games, and connecting with other life forms. Thanks to an early 2010's update, art is now a core program functionality of FB's software. Main interests : phenomenology, interconnetion, storytelling and technical images.</p>
+<p id="bio">A cyborg form of life, Francesco Biasi was released in 1988 as an evolving software - hardware system. Since then, FB enjoys reading, playing video games, and connecting with other life forms. Thanks to an early 2010's update, art is now a core program functionality of FB's software. Main interests: connections between body, technology, and images; phenomenology; storytelling.</p>
 
 <script>
+// Bio randomization system
+const bioSegments = {
+    A: ["A cyborg form of life", "The reincarnation of a corgi", "A devoted sofa lover", "A sci-fi fan", "A troll with a soul", "The son of Francesca and Alberto", "A brother to Nove", "A pizza addict", "Sometimes annoying, most of the time funny"],
+    B: ["was released in 1988 as an evolving software - hardware system", "was born in 1988 in Italy, and is now based in Paris", "was born in the only Dragon year of the eighties", "was born the same year the Morris Worm hit the Internet", "was born the same year as Akira (the animated film)"],
+    C: ["enjoys reading, playing video games, and connecting with other life forms", "enjoys reading, going for walks, barking, and being bad at video games", "enjoys reading, writing, eating sweets, and waking up for sunrise", "enjoys reading, going to sleep early, and having pancakes for dinner", "enjoys reading, rewatching old sci-fi classics, and staying home", "enjoys reading, wearing black, and playing with computers", "enjoys reading, using his phone as a prosthesis, and collecting hats", "enjoys reading, and trying to understand what he does not understand", "enjoys reading, drinking coffee, and being a diligent student", "enjoys reading, and watching dogs do dog things"],
+    D: ["Thanks to an early 2010's update, art is now a core program functionality of FB's software", "FB is an art worker, curator, PhD candidate, and fan of The Matrix", "FB works in the art field — but for how long?", "FB loves art, but does art love him back?", "FB is trying to do something with art. Meaning will come with time", "FB is struggling with the world as it is. Is art a reasonable response?"]
+};
+
+let currentSegments = { A: 0, B: 0, C: 0, D: 0 };
+
+function getRandomIndex(array, excludeIndex) {
+    let newIndex;
+    do {
+        newIndex = Math.floor(Math.random() * array.length);
+    } while (newIndex === excludeIndex && array.length > 1);
+    return newIndex;
+}
+
+function updateBioText() {
+    const bioElement = document.getElementById('bio');
+    const segmentA = bioSegments.A[currentSegments.A];
+    const segmentB = bioSegments.B[currentSegments.B];
+    const segmentC = bioSegments.C[currentSegments.C];
+    const segmentD = bioSegments.D[currentSegments.D];
+    
+    bioElement.innerHTML = `<strong>${segmentA}</strong>, Francesco Biasi <strong>${segmentB}</strong>. Since then, FB <strong>${segmentC}</strong>. <strong>${segmentD}</strong>. Main interests: connections between body, technology, and images; phenomenology; storytelling.`;
+}
+
+function randomizeBio(segmentsToChange = null) {
+    const bioElement = document.getElementById('bio');
+    
+    // Apply fade effect
+    bioElement.classList.add('fade');
+    
+    setTimeout(() => {
+        if (segmentsToChange === null) {
+            // Initial load: randomize all segments
+            currentSegments.A = getRandomIndex(bioSegments.A, -1);
+            currentSegments.B = getRandomIndex(bioSegments.B, -1);
+            currentSegments.C = getRandomIndex(bioSegments.C, -1);
+            currentSegments.D = getRandomIndex(bioSegments.D, -1);
+        } else {
+            // Update only specified segments
+            segmentsToChange.forEach(segment => {
+                currentSegments[segment] = getRandomIndex(bioSegments[segment], currentSegments[segment]);
+            });
+        }
+        
+        updateBioText();
+        
+        // Remove fade effect
+        setTimeout(() => {
+            bioElement.classList.remove('fade');
+        }, 50);
+    }, 75);
+}
+
+function startBioRandomization() {
+    // Initial randomization on page load
+    randomizeBio();
+    
+    // Set up interval to change all segments every 11 seconds
+    setInterval(() => {
+        randomizeBio(['A', 'B', 'C', 'D']);
+    }, 11000);
+}
+
 function toggleMatrix() {
     const body = document.body;
     const isMatrixMode = body.classList.contains('matrix-mode');
@@ -161,11 +236,12 @@ function toggleMatrix() {
     }
 }
 
-// Check if matrix mode was previously enabled
+// Check if matrix mode was previously enabled and start bio randomization
 document.addEventListener('DOMContentLoaded', function() {
     if (localStorage.getItem('matrixMode') === 'true') {
         document.body.classList.add('matrix-mode');
     }
+    startBioRandomization();
 });
 
 // minimal random navigation

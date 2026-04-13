@@ -126,6 +126,29 @@ body.matrix-mode .timestamp {
     opacity: 0.3;
 }
 
+.stay-serious-btn {
+    display: block;
+    margin: 15px 0 5px 0;
+    font-family: "Source Code Pro", monospace;
+    font-size: 12px;
+    color: #0066ff;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: color 0.5s ease;
+    text-decoration: underline;
+    padding: 0;
+}
+
+body.matrix-mode .stay-serious-btn {
+    color: #00ffff;
+}
+
+#serious-bio {
+    display: none;
+    margin-top: 10px;
+}
+
 @media (max-width: 600px) {
     body { margin: 15px; }
     h1 { font-size: 16px; }
@@ -155,7 +178,45 @@ body.matrix-mode .timestamp {
 
 <p id="bio">A cyborg form of life, Francesco Biasi was released in 1988 as an evolving software - hardware system. Since then, FB enjoys reading, playing video games, and connecting with other life forms. Thanks to an early 2010's update, art is now a core program functionality of FB's software. Main interests: connections between body, technology, and images; phenomenology; storytelling.</p>
 
+<button class="stay-serious-btn" onclick="toggleSeriousBio()">stay serious</button>
+
+<div id="serious-bio">
+<p>Francesco Biasi is an art worker based in Paris. Since 2018, he has been working at the Centre Photographique d'Île-de-France (CPIF), where his practice moves between artistic programming, exhibition-making, and the coordination of artist residencies.</p>
+<p>His work is grounded in questions of perception — how images act on bodies, how they construct our relation to the real, and what forms of mediation they simultaneously perform and conceal. He works across photography, video, installation, and digital media, with a particular interest in the dispositif as both a critical concept and a spatial practice.</p>
+<p>Alongside his institutional and independent work, he pursues doctoral research at the Université de Lille (lab HARTIS), where his thesis examines video game dynamics in contemporary art — exploring the concept of jouabilité and its phenomenological underpinnings, from Duchamp and Fluxus through to current practices in game-based and interactive art.</p>
+<button class="stay-serious-btn" onclick="toggleSeriousBio()">back to the funny version</button>
+</div>
+
 <script>
+// Toggle between playful and serious bio
+let isSerious = false;
+
+function toggleSeriousBio() {
+    const bioElement = document.getElementById('bio');
+    const seriousBioElement = document.getElementById('serious-bio');
+    const playfulButton = document.querySelector('#bio + .stay-serious-btn');
+    
+    if (!isSerious) {
+        // Switch to serious mode
+        bioElement.style.display = 'none';
+        playfulButton.style.display = 'none';
+        seriousBioElement.style.display = 'block';
+        isSerious = true;
+        
+        // Stop bio randomization when in serious mode
+        clearInterval(bioInterval);
+    } else {
+        // Switch back to playful mode
+        bioElement.style.display = 'block';
+        playfulButton.style.display = 'block';
+        seriousBioElement.style.display = 'none';
+        isSerious = false;
+        
+        // Restart bio randomization
+        startBioRandomization();
+    }
+}
+
 // Bio randomization system
 const bioSegments = {
     A: ["A cyborg form of life", "The reincarnation of a corgi", "A devoted sofa lover", "A sci-fi fan", "A troll with a soul", "The son of Francesca and Alberto", "A brother to Nove", "A pizza addict", "Sometimes annoying, most of the time funny"],
@@ -213,12 +274,19 @@ function randomizeBio(segmentsToChange = null) {
     }, 75);
 }
 
+let bioInterval;
+
 function startBioRandomization() {
+    // Clear any existing interval
+    if (bioInterval) {
+        clearInterval(bioInterval);
+    }
+    
     // Initial randomization on page load
     randomizeBio();
     
     // Set up interval to change all segments every 11 seconds
-    setInterval(() => {
+    bioInterval = setInterval(() => {
         randomizeBio(['A', 'B', 'C', 'D']);
     }, 11000);
 }

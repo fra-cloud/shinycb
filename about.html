@@ -242,7 +242,12 @@ function updateBioText() {
     const segmentC = bioSegments.C[currentSegments.C];
     const segmentD = bioSegments.D[currentSegments.D];
     
-    bioElement.innerHTML = `<strong>${segmentA}</strong>, Francesco Biasi <strong>${segmentB}</strong>. Since then, FB <strong>${segmentC}</strong>. <strong>${segmentD}</strong>. Main interests: connections between body, technology, and images; phenomenology; storytelling.`;
+    // Add period only if segment doesn't end with punctuation
+    const addPeriod = (text) => {
+        return text.match(/[.!?]$/) ? text : text + '.';
+    };
+    
+    bioElement.innerHTML = `<strong>${segmentA}</strong>, Francesco Biasi <strong>${segmentB}</strong>. Since then, FB <strong>${segmentC}</strong>. <strong>${addPeriod(segmentD)}</strong> Main interests: connections between body, technology, and images; phenomenology; storytelling.`;
 }
 
 function randomizeBio(segmentsToChange = null) {

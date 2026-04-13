@@ -89,7 +89,7 @@ body.matrix-mode h2 {
 
 h3 {
     font-size: 12px;
-    font-weight: normal;
+    font-weight: bold;
     margin: 15px 0 8px 0;
     transition: color 0.5s ease;
 }
@@ -134,6 +134,29 @@ body.matrix-mode .img-placeholder {
     color: #00ff00;
 }
 
+.project-image {
+    max-width: 100%;
+    height: auto;
+    margin: 20px 0;
+    border: 1px solid #000;
+    transition: border-color 0.5s ease;
+}
+
+body.matrix-mode .project-image {
+    border-color: #00ff00;
+}
+
+.project-title {
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0 0 10px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode .project-title {
+    color: #00ff00;
+}
+
 .system {
     color: #0000ff;
     transition: color 0.5s ease;
@@ -159,6 +182,7 @@ body.matrix-mode .error {
     h2, h3, p, a { font-size: 14px; }
     .nav a { font-size: 14px; }
     .img-placeholder { font-size: 14px; padding: 30px; }
+    .project-title { font-size: 14px; }
 }
 </style>
 </head>
@@ -176,22 +200,32 @@ body.matrix-mode .error {
 <a href="../ping.html">ping</a>
 </div>
 
-<h2>project_1.html</h2>
+<p class="project-title">Tentacle Togetherness<br>
+Anouk Kruithof / 2023 / curating</p>
 
-<div class="img-placeholder">
-[IMAGE_DATA_CORRUPTED]<br>
-<span class="error">ERROR: visual_output.jpg not found</span><br>
-<span class="system">attempting recovery...</span>
-</div>
+<h3>[en]</h3>
+<p>Tentacle Togetherness brings together works produced by Anouk Kruithof over the past twenty years. The first monographic exhibition in France dedicated to this major artist, it assembles sculptures, photographs, videos, installations, books, and printed matter. Human and non-human entanglements, fluid identities, and the circulation of images form the core of the project. As its title suggests, the exhibition highlights a practice that unfolds in a tentacular way, through a continuous movement of openness, transformation, and relation-making.</p>
 
-<h3>description</h3>
-<p>Detailed description of Project 1. This section contains information about the project's goals, methodology, and outcomes.</p>
+<h3>[fr]</h3>
+<p>Tentacle Togetherness rassemble des œuvres produites par Anouk Kruithof au cours des vingt dernières années. Première exposition monographique en France consacrée à cette artiste majeure, elle réunit sculptures, photographies, vidéos, installations, livres et imprimés. Les liens entre humains et non-humains, les identités fluides et la circulation des images en constituent le cœur. Elle met ainsi en lumière une pratique qui, comme son titre l'indique, se déploie de manière tentaculaire, dans un mouvement continu d'ouverture, de transformation et de mise en relation.</p>
 
-<h3>details</h3>
-<p>Additional technical details and specifications about the project implementation.</p>
+<h3>[venue]</h3>
+<p>CPIF</p>
 
-<h3>results</h3>
-<p>Summary of the project results and key findings.</p>
+<h3>[links]</h3>
+<p><a href="https://anoukkruithof.com/?portfolio=tentacle-togetherness2023" target="_blank">https://anoukkruithof.com/?portfolio=tentacle-togetherness2023</a></p>
+
+<h3>[image]</h3>
+<img src="tentacle-togetherness.jpg" alt="Tentacle Togetherness exhibition view" class="project-image">
+
+<h3>[text / fr]</h3>
+<p>Plurielle, la pratique d'Anouk Kruithof procède d'un mouvement irrésistible d'accumulation d'intuitions, de rencontres, d'images, de matières... Ses recherches se développent de façon tentaculaire, selon une logique de réseau dessinant un champ de réflexion aux frontières mouvantes. L'artiste s'intéresse notamment à la relation entre humain et non-humain, à l'environnement, au vivre-ensemble mais également aux états d'âme individuels, à la profusion d'images et à leurs usages. Autant de thèmes dont elle révèle l'interconnexion profonde.</p>
+
+<p>À cette absence de cloisonnement fait souvent écho l'hybridation du medium. Sculptures à la « peau d'images » ou qui « transpirent », tirages-prothèses ou organiques, troublent les frontières acquérant un statut incertain. Polysémiques, ces pièces nous incitent à déconstruire les catégories sur lesquelles est bâtie notre pensée - telles que nature, culture, technologie - aussi bien qu'à interroger les notions de photographie et sculpture.</p>
+
+<p>Le travail d'Anouk Kruithof intègre souvent une forte dimension collaborative. Un dialogue collectif se tisse alors en dehors de l'atelier, parfois même dans le monde virtuel d'Internet. Les participant·es sont ainsi appelé·es, de façon joyeuse, au partage et à la prise de conscience au sein d'un espace relationnel dépourvu de barrières.</p>
+
+<p>Conçue comme une totalité organique, l'exposition Tentacle Togetherness témoigne d'une démarche foisonnante où les dimensions sensible et conceptuelle fusionnent. Animée par une énergie vitale débordante, elle esquisse l'horizon d'un advenir utopique, invitant un regard empreint d'un espoir curieux.</p>
 
 <script>
 function toggleMatrix() {
@@ -228,6 +262,7 @@ document.addEventListener('keydown', function(e) {
             'project2.html',
             'project3.html',
             'project4.html',
+            'project5.html',
             '../phd-details.html'
         ];
         const random = pages[Math.floor(Math.random() * pages.length)];

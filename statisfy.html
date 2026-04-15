@@ -99,14 +99,24 @@ body.matrix-mode h2 {
     font-size: 12px;
 }
 
-.gif-container {
-    text-align: center;
+#card-stage { 
+    position: relative; 
+    width: 100%; 
+    height: 160px; 
+    overflow: visible; 
     margin: 40px 0;
 }
 
-.gif-container img {
-    max-width: 100%;
-    height: auto;
+#win-canvas {
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    pointer-events: all; 
+    z-index: 10;
+    cursor: pointer;
+    image-rendering: pixelated;
 }
 
 @media (max-width: 600px) {
@@ -115,7 +125,7 @@ body.matrix-mode h2 {
     h1 a { font-size: 16px; }
     h2, a { font-size: 14px; }
     .nav a { font-size: 14px; }
-    .gif-container { margin: 20px 0; }
+    #card-stage { margin: 20px 0; }
 }
 </style>
 </head>
@@ -135,11 +145,362 @@ body.matrix-mode h2 {
 
 <h2>👁️ statisfy.exe</h2>
 
-<div class="gif-container">
-<img src="statisfy.gif" alt="statisfy">
-</div>
+<div id="card-stage"></div>
+<canvas id="win-canvas"></canvas>
 
 <script>
+// Card animation variables
+var CW = 71, CH = 96;
+var NUM_COLS = 8;
+var stacks = [];
+var GRAVITY = 3;
+var MIN_BOUNCE_VEL = 5;
+var TICK_DELAY = 10;
+var winTimeout = null;
+var sequence = [];
+var current = null;
+var seqIdx = 0;
+var canvas = null;
+var ctx;
+
+var SUITS = ['♣','♦','♥','♠'];
+var RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+function isRed(s) { return s === 1 || s === 2; }
+
+// Build sequence
+function buildSequence() {
+  sequence = [];
+  var cards = [];
+  for (var rank = 12; rank >= 0; rank--)
+    for (var suit = 0; suit < 4; suit++)
+      cards.push({ suit: suit, rank: rank });
+
+  for (var i = cards.length - 1; i > 0; i--) {
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = cards[i]; cards[i] = cards[j]; cards[j] = t;
+  }
+
+  for (var k = 0; k < cards.length; k++) {
+    var isSide = (k % 6 === 5);
+    var isLong = (k % 4 === 3) && !isSide;
+    sequence.push({
+      suit: cards[k].suit, rank: cards[k].rank,
+      stack: k % NUM_COLS, isLong: isLong, isSide: isSide
+    });
+  }
+}
+
+// Stack positions
+function initStacks() {
+  var stage = document.getElementById('card-stage');
+  var rect = stage.getBoundingClientRect();
+  var scrollY = window.scrollY || window.pageYOffset;
+  var gap = 12;
+  var totalW = NUM_COLS * CW + (NUM_COLS - 1) * gap;
+  var startX = rect.left + (rect.width - totalW) / 2;
+  var stageY = rect.top + scrollY + 20;
+  stacks = [];
+  for (var col = 0; col < NUM_COLS; col++)
+    stacks.push({ x: startX + col * (CW + gap), y: stageY });
+}
+
+function roundRectPath(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.lineTo(x + w - r, y);
+  ctx.arc(x + w - r, y + r, r, -Math.PI/2, 0);
+  ctx.lineTo(x + w, y + h - r);
+  ctx.arc(x + w - r, y + h - r, r, 0, Math.PI/2);
+  ctx.lineTo(x + r, y + h);
+  ctx.arc(x + r, y + h - r, r, Math.PI/2, Math.PI);
+  ctx.lineTo(x, y + r);
+  ctx.arc(x + r, y + r, r, Math.PI, -Math.PI/2);
+  ctx.closePath();
+}
+
+// Draw metallic card back
+function drawCardBack(x, y) {
+  ctx.save();
+  roundRectPath(ctx, x, y, CW, CH, 4);
+  ctx.clip();
+  
+  var g = ctx.createLinearGradient(x, y, x+CW, y+CH);
+  g.addColorStop(0, '#525c77');
+  g.addColorStop(0.4, '#ececf4');
+  g.addColorStop(1, '#49506a');
+  ctx.fillStyle = g;
+  ctx.fillRect(x, y, CW, CH);
+  
+  ctx.restore();
+  ctx.strokeStyle = 'rgba(160,165,200,0.7)';
+  ctx.lineWidth = 1;
+  roundRectPath(ctx, x+0.5, y+0.5, CW-1, CH-1, 4);
+  ctx.stroke();
+}
+
+// Draw face-up card
+function drawCardFace(x, y, suit, rank) {
+  var r = RANKS[rank];
+  var s = SUITS[suit];
+  var red = isRed(suit);
+
+  ctx.fillStyle = '#fff';
+  roundRectPath(ctx, x, y, CW, CH, 3);
+  ctx.fill();
+  ctx.strokeStyle = '#bbb'; ctx.lineWidth = 1;
+  roundRectPath(ctx, x+0.5, y+0.5, CW-1, CH-1, 3);
+  ctx.stroke();
+
+  ctx.fillStyle = red ? '#cc0000' : '#111';
+  ctx.font = 'bold 12px Courier New, monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText(r, x+4, y+14);
+  ctx.font = '11px Courier New, monospace';
+  ctx.fillText(s, x+4, y+26);
+  ctx.font = '28px Courier New, monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(s, x+CW/2, y+CH/2+10);
+  ctx.save();
+  ctx.translate(x+CW-4, y+CH-6);
+  ctx.rotate(Math.PI);
+  ctx.font = 'bold 12px Courier New, monospace';
+  ctx.textAlign = 'left';
+  ctx.fillText(r, 0, 0);
+  ctx.font = '11px Courier New, monospace';
+  ctx.fillText(s, 0, 12);
+  ctx.restore();
+}
+
+// Black side strip functionality
+var STRIP_W = 10;
+var stripState = null;
+
+function startSideStrip(cardX, vx) {
+  stripState = {
+    goRight: vx > 0,
+    pts: []
+  };
+}
+
+function updateSideStrip(cardX, cardY, vx) {
+  if (!stripState) return;
+
+  var innerX = stripState.goRight ? cardX : cardX + CW;
+  var outerX = stripState.goRight ? cardX - STRIP_W : cardX + CW + STRIP_W;
+
+  stripState.pts.push({
+    innerX: innerX,
+    outerX: outerX,
+    yTop: cardY,
+    yBot: cardY + CH
+  });
+
+  drawStripPolygon();
+}
+
+function drawStripPolygon() {
+  if (!stripState || stripState.pts.length < 1) return;
+  var pts = stripState.pts;
+  var n = pts.length;
+
+  ctx.save();
+  ctx.fillStyle = '#000';
+
+  for (var i = 0; i < n - 1; i++) {
+    var a = pts[i], b = pts[i+1];
+
+    ctx.beginPath();
+    ctx.moveTo(a.outerX, a.yTop);
+    ctx.lineTo(b.outerX, b.yTop);
+    ctx.lineTo(b.outerX, b.yBot);
+    ctx.lineTo(a.outerX, a.yBot);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(a.innerX, a.yTop);
+    ctx.lineTo(b.innerX, b.yTop);
+    ctx.lineTo(b.innerX, b.yBot);
+    ctx.lineTo(a.innerX, a.yBot);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(a.outerX, a.yTop);
+    ctx.lineTo(a.innerX, a.yTop);
+    ctx.lineTo(b.innerX, b.yTop);
+    ctx.lineTo(b.outerX, b.yTop);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.beginPath();
+    ctx.moveTo(a.outerX, a.yBot);
+    ctx.lineTo(a.innerX, a.yBot);
+    ctx.lineTo(b.innerX, b.yBot);
+    ctx.lineTo(b.outerX, b.yBot);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  if (n >= 1) {
+    var last = pts[n-1];
+    ctx.beginPath();
+    ctx.moveTo(last.outerX, last.yTop);
+    ctx.lineTo(last.innerX, last.yTop);
+    ctx.lineTo(last.innerX, last.yBot);
+    ctx.lineTo(last.outerX, last.yBot);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+function clearSideStrip() {
+  stripState = null;
+}
+
+function drawCardFaceWithSide(x, y, suit, rank, vx) {
+  drawCardFace(x, y, suit, rank);
+  updateSideStrip(x, y, vx);
+}
+
+// Draw stacks
+function drawStacks() {
+  if (!ctx) return;
+  stacks.forEach(function(st) {
+    for (var off = 1; off >= 0; off--)
+      drawCardBack(st.x, st.y + off * 3);
+  });
+}
+
+// Launch next card with random trajectory each time
+function launchNext() {
+  if (seqIdx >= sequence.length) return false;
+  var info = sequence[seqIdx++];
+  var st = stacks[info.stack];
+
+  // Generate random trajectory for each card
+  var goRight = Math.random() > 0.5;
+  var baseVx = (goRight ? 1 : -1) * (3 + Math.random() * 3);
+  var baseVy = -(18 + Math.random() * 8);
+
+  var vx, vy, bounceD;
+
+  if (info.isSide) {
+    // Side cards: use base trajectory with slight variation
+    vx = baseVx + (Math.random() - 0.5) * 2;
+    vy = baseVy + (Math.random() - 0.5) * 4;
+    bounceD = -0.6 + (Math.random() - 0.5) * 0.2;
+  } else if (info.isLong) {
+    // Long throws: stronger horizontal velocity with random direction
+    var sign = Math.random() > 0.5 ? 1 : -1;
+    vx = sign * (8 + Math.random() * 4);
+    vy = baseVy + (Math.random() - 0.5) * 6;
+    bounceD = -0.55 + (Math.random() - 0.5) * 0.2;
+  } else {
+    // Normal cards: use base trajectory with variation
+    vx = baseVx + (Math.random() - 0.5) * 2;
+    vy = baseVy + (Math.random() - 0.5) * 4;
+    bounceD = -0.85 + (Math.random() - 0.5) * 0.2;
+  }
+
+  current = {
+    suit: info.suit, rank: info.rank,
+    x: st.x, y: st.y, vx: vx, vy: vy,
+    bounce: bounceD, isSide: info.isSide
+  };
+
+  // Draw the card immediately at the stack position
+  if (info.isSide) {
+    startSideStrip(st.x, vx);
+    drawCardFaceWithSide(Math.round(st.x), Math.round(st.y), info.suit, info.rank, vx);
+  } else {
+    drawCardFace(Math.round(st.x), Math.round(st.y), info.suit, info.rank);
+  }
+
+  return true;
+}
+
+// Physics tick
+function tick() {
+  if (!current) {
+    if (!launchNext()) return;
+  }
+
+  current.vy += GRAVITY;
+  current.x += current.vx;
+  current.y += current.vy;
+
+  var floor = window.innerHeight - CH;
+  if (current.y >= floor) {
+    current.y = floor;
+    current.vy = Math.abs(current.vy) < MIN_BOUNCE_VEL ? 0 : current.vy * current.bounce;
+  }
+
+  var x = Math.round(current.x), y = Math.round(current.y);
+
+  if (current.isSide) {
+    drawCardFaceWithSide(x, y, current.suit, current.rank, current.vx);
+  } else {
+    drawCardFace(x, y, current.suit, current.rank);
+  }
+
+  if (current.x > canvas.width + CW || current.x < -CW * 2) {
+    if (current.isSide) clearSideStrip();
+    current = null;
+    if (seqIdx < sequence.length) launchNext();
+  }
+
+  winTimeout = setTimeout(tick, TICK_DELAY);
+}
+
+// Initialize card animation
+function initCardAnimation() {
+  canvas = document.getElementById('win-canvas');
+  if (!canvas) return;
+  
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = true;
+
+  initStacks();
+  buildSequence();
+  drawStacks();
+}
+
+// Start card animation on click
+function startCardAnimation() {
+  if (seqIdx === 0 && !current && !winTimeout) {
+    seqIdx = 0; current = null;
+    winTimeout = setTimeout(tick, 0);
+  }
+}
+
+// Window resize handler
+window.addEventListener('resize', function() {
+  if (winTimeout) { clearTimeout(winTimeout); winTimeout = null; }
+  if (canvas) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+    initStacks();
+    drawStacks();
+  }
+});
+
+// Initialize on load
+window.addEventListener('load', function() {
+  initCardAnimation();
+  // Add click listener to canvas
+  var canvas = document.getElementById('win-canvas');
+  if (canvas) {
+    canvas.addEventListener('click', startCardAnimation);
+  }
+});
+
 function toggleMatrix() {
     const body = document.body;
     const isMatrixMode = body.classList.contains('matrix-mode');

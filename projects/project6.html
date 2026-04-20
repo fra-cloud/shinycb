@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>project_6.html - Francesco Biasi</title>
+<style>
+body {
+    font-family: "Source Code Pro", monospace;
+    margin: 20px;
+    background: #fff;
+    color: #000;
+    line-height: 1.3;
+    font-size: 12px;
+    transition: all 0.5s ease;
+}
+
+/* Matrix mode styles */
+body.matrix-mode {
+    font-family: "Courier New", "Lucida Console", monospace;
+    background: #001100;
+    color: #00ff00;
+}
+
+.matrix-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+body.matrix-mode .matrix-toggle {
+    color: #00ff00;
+}
+
+.matrix-toggle:hover {
+    opacity: 1;
+}
+
+a {
+    color: #000;
+    font-size: 12px;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode a {
+    color: #00ff00;
+}
+
+a:visited {
+    color: #000;
+}
+
+body.matrix-mode a:visited {
+    color: #00cc00;
+}
+
+h1 {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode h1 {
+    color: #00ff00;
+}
+
+h1 a {
+    text-decoration: none;
+    font-size: 14px;
+}
+
+h2 {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 20px 0 10px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode h2 {
+    color: #00ff00;
+}
+
+h3 {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 8px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode h3 {
+    color: #00ff00;
+}
+
+p {
+    font-size: 12px;
+    margin: 0 0 10px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode p {
+    color: #00ff00;
+}
+
+.nav {
+    margin: 0 0 30px 0;
+}
+
+.nav a {
+    margin-right: 15px;
+    text-decoration: underline;
+    font-size: 12px;
+}
+
+.img-placeholder {
+    border: 1px solid #000;
+    padding: 40px;
+    text-align: center;
+    margin: 20px 0;
+    font-size: 12px;
+    background: #f0f0f0;
+    transition: all 0.5s ease;
+}
+
+body.matrix-mode .img-placeholder {
+    border-color: #00ff00;
+    background: #002200;
+    color: #00ff00;
+}
+
+.project-image {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+}
+
+.project-title {
+    font-weight: bold;
+    font-size: 12px;
+    margin: 0 0 10px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode .project-title {
+    color: #00ff00;
+}
+
+.system {
+    color: #0000ff;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode .system {
+    color: #00ffff;
+}
+
+.error {
+    color: #ff0000;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode .error {
+    color: #ff6666;
+}
+
+@media (max-width: 600px) {
+    body { margin: 15px; }
+    h1 { font-size: 16px; }
+    h1 a { font-size: 16px; }
+    h2, h3, p, a { font-size: 14px; }
+    .nav a { font-size: 14px; }
+    .img-placeholder { font-size: 14px; padding: 30px; }
+    .project-title { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<button class="matrix-toggle" onclick="toggleMatrix()" title="">[alt]</button>
+
+<h1><a href="../index.html">Francesco Biasi</a></h1>
+
+<div class="nav">
+<a href="../about.html">about</a>
+<a href="../outputs.html">outputs</a>
+<a href="../phd.html">phd</a>
+<a href="../links.html">links</a>
+<a href="../ping.html">ping</a>
+</div>
+
+<p class="project-title">Mold is Beautiful<br>
+Luce Lebart / 2024 / curating</p>
+
+<h3>[en]</h3>
+<p>Developed in collaboration with Luce Lebart, Mold is Beautiful was presented at Il Meccanico, the exhibition space of Grenze, a Verona-based cultural organization devoted to photography. Centered on the art historian and curator's eponymous project, the exhibition unfolds as a subtle reflection on authorship, shifting aesthetic regimes, and the material and cultural histories of the photographic image.</p>
+
+<h3>[fr]</h3>
+<p>Développé en collaboration avec Luce Lebart, Mold is Beautiful a été présenté à Il Meccanico, l'espace d'exposition de Grenze, organisation culturelle veronaise dédiée à la photographie. Articulée autour du projet éponyme de l'historienne de l'art et curatrice, l'exposition déploie une réflexion subtile sur la notion d'auteur, les déplacements des régimes esthétiques, ainsi que sur les histoires matérielles et culturelles de l'image photographique.</p>
+
+<h3>[venue]</h3>
+<p>Il Meccanico, Verona</p>
+
+<h3>[links]</h3>
+<p><a href="https://lucelebart.org/index.php/expositions/135-2024-mold-is-beautifull-il-meccanico-grenze-arsenali-fotografici-verone-italie" target="_blank">https://lucelebart.org/index.php/expositions/135-2024-mold-is-beautifull-il-meccanico-grenze-arsenali-fotografici-verone-italie</a></p>
+
+<h3>[image]</h3>
+<img src="03_moisissure_101.jpg" alt="Mold is Beautiful exhibition view" class="project-image">
+
+<script>
+function toggleMatrix() {
+    const body = document.body;
+    const isMatrixMode = body.classList.contains('matrix-mode');
+    
+    if (isMatrixMode) {
+        body.classList.remove('matrix-mode');
+        localStorage.removeItem('matrixMode');
+    } else {
+        body.classList.add('matrix-mode');
+        localStorage.setItem('matrixMode', 'true');
+    }
+}
+
+// Check if matrix mode was previously enabled
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('matrixMode') === 'true') {
+        document.body.classList.add('matrix-mode');
+    }
+});
+
+// minimal random navigation
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'r' && e.ctrlKey) {
+        e.preventDefault();
+        const pages = [
+            '../about.html',
+            '../outputs.html',
+            '../phd.html',
+            '../links.html',
+            '../ping.html',
+            'project1.html',
+            'project2.html',
+            'project3.html',
+            'project4.html',
+            'project5.html',
+            'project6.html',
+            '../phd-details.html'
+        ];
+        const random = pages[Math.floor(Math.random() * pages.length)];
+        window.location.href = random;
+    }
+});
+</script>
+
+</body>
+</html>

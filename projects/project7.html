@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>project_7.html - Francesco Biasi</title>
+<style>
+body {
+    font-family: "Source Code Pro", monospace;
+    margin: 20px;
+    background: #fff;
+    color: #000;
+    line-height: 1.3;
+    font-size: 12px;
+    transition: all 0.5s ease;
+}
+
+/* Matrix mode styles */
+body.matrix-mode {
+    font-family: "Courier New", "Lucida Console", monospace;
+    background: #001100;
+    color: #00ff00;
+}
+
+.matrix-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+    z-index: 1000;
+}
+
+body.matrix-mode .matrix-toggle {
+    color: #00ff00;
+}
+
+.matrix-toggle:hover {
+    opacity: 1;
+}
+
+a {
+    color: #000;
+    font-size: 12px;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode a {
+    color: #00ff00;
+}
+
+a:visited {
+    color: #000;
+}
+
+body.matrix-mode a:visited {
+    color: #00cc00;
+}
+
+h1 {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode h1 {
+    color: #00ff00;
+}
+
+h1 a {
+    text-decoration: none;
+    font-size: 14px;
+}
+
+h2 {
+    font-size: 12px;
+    font-weight: normal;
+    margin: 20px 0 10px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode h2 {
+    color: #00ff00;
+}
+
+h3 {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 8px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode h3 {
+    color: #00ff00;
+}
+
+p {
+    margin: 0 0 10px 0;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode p {
+    color: #00ff00;
+}
+
+.nav {
+    margin-bottom: 30px;
+    transition: color 0.5s ease;
+}
+
+.nav a {
+    margin-right: 15px;
+    text-decoration: none;
+}
+
+.nav a:hover {
+    text-decoration: underline;
+}
+
+.project-image {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    display: block;
+}
+
+.project-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: color 0.5s ease;
+}
+
+body.matrix-mode .project-title {
+    color: #00ff00;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    body { margin: 10px; font-size: 11px; }
+    .nav a { margin-right: 10px; }
+    .project-title { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<button class="matrix-toggle" onclick="toggleMatrix()" title="">[alt]</button>
+
+<h1><a href="../index.html">Francesco Biasi</a></h1>
+
+<div class="nav">
+<a href="../about.html">about</a>
+<a href="../outputs.html">outputs</a>
+<a href="../phd.html">phd</a>
+<a href="../links.html">links</a>
+<a href="../ping.html">ping</a>
+</div>
+
+<p class="project-title">Transparences liquides. Corps, écran, geste<br>
+2026 / writing</p>
+
+<h3>[en]</h3>
+<p>This contribution extends and shifts phenomenological inquiries around the screen, in order to problematize the invisibility of the activation gesture. The latter now conditions the existence of most images, without being truly brought into consciousness, particularly in its political scope. This text was published in the book Ctrl. – New Functions of Images, on the occasion of the eponymous group exhibition, presented at the ENSP in Arles, curated by Nicolas Giraud and a group of students.</p>
+
+<h3>[fr]</h3>
+<p>Cette contribution étend et déplace les questionnements phénoménologiques autour de l'écran, afin de problématiser l'invisibilité du geste d'activation. Ce dernier conditionne aujourd'hui l'existence de la plupart des images, sans pour autant être réellement conscientisé, notamment dans sa portée politique. Ce texte a été publié dans le cadre de l'ouvrage Ctrl. – Nouvelles fonctions des images, à l'occasion de l'exposition collective éponyme, présentée à l'ENSP d'Arles, dont le commissariat a été assuré par Nicolas Giraud et un groupe d'étudiant·e·s.</p>
+
+<h3>[venue]</h3>
+<p>Ecole Nationale Supérieure de la Photographie, Arles</p>
+
+<h3>[links]</h3>
+<p><a href="https://www.lespressesdureel.com/ouvrage.php?id=13213&menu=0" target="_blank">https://www.lespressesdureel.com/ouvrage.php?id=13213&menu=0</a></p>
+
+<h3>[image]</h3>
+<img src="CTRL.jpg" alt="Ctrl. – New Functions of Images" class="project-image">
+
+<h3>[text / fr]</h3>
+<p>-extrait</p>
+<p>Aujourd'hui, prêter attention à la perception en train de se faire, devenir conscient·es de l'engagement nécessaire au regard, c'est aussi, et peut-être avant tout, penser notre rôle d'acteur·rices d'un univers iconographique partagé. Car l'image activable ne se contente pas d'être vue : pour advenir, elle suppose une participation plus ou moins consciente, ce qui en fait une situation opératoire. Cela nous oblige alors à interroger la portée politique d'actes parmi les plus banals : qui active ? dans quelles conditions ? avec quelle marge de manœuvre ? vers quelle finalité ? Il s'agit là d'un faisceau d'enjeux qui, en dépit de leur résonance quotidienne, demandent encore à être pensés en profondeur. C'est en cela que l'œuvre contemporaine, lorsqu'elle devient protocole d'activation, propose un déplacement fécond. Depuis le terrain de l'expérience sensible, elle esquisse une pensée politique de la perception. Celle-ci se loge dans les interstices d'une opérativité d'autant plus invisible qu'elle prend des formes ordinaires.</p>
+
+<script>
+function toggleMatrix() {
+    const body = document.body;
+    const isMatrixMode = body.classList.contains('matrix-mode');
+    
+    if (isMatrixMode) {
+        body.classList.remove('matrix-mode');
+        localStorage.removeItem('matrixMode');
+    } else {
+        body.classList.add('matrix-mode');
+        localStorage.setItem('matrixMode', 'true');
+    }
+}
+
+// Check if matrix mode was previously enabled
+document.addEventListener('DOMContentLoaded', function() {
+    if (localStorage.getItem('matrixMode') === 'true') {
+        document.body.classList.add('matrix-mode');
+    }
+});
+
+// minimal random navigation
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'r' && e.ctrlKey) {
+        e.preventDefault();
+        const pages = [
+            '../about.html',
+            '../outputs.html',
+            '../phd.html',
+            '../links.html',
+            '../ping.html',
+            'project1.html',
+            'project2.html',
+            'project3.html',
+            'project4.html',
+            'project5.html',
+            'project6.html',
+            'project7.html',
+            '../phd-details.html'
+        ];
+        const random = pages[Math.floor(Math.random() * pages.length)];
+        window.location.href = random;
+    }
+});
+</script>
+
+</body>
+</html>

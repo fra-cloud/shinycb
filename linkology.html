@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Francesco Biasi</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Francesco Biasi">
+<meta property="og:description" content="curating, writing, gaming">
+<meta property="og:image" content="https://biasi.fun/projects/CTRL.jpg">
+<style>
+body {
+    font-family: "Source Code Pro", monospace;
+    margin: 20px;
+    background: #fff;
+    color: #000;
+    line-height: 1.3;
+    font-size: 12px;
+}
+
+a {
+    color: #000;
+    font-size: 12px;
+}
+
+a:visited {
+    color: #000;
+}
+
+h1 {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 0 20px 0;
+}
+
+h3 {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 15px 0 8px 0;
+}
+
+p {
+    margin: 0 0 10px 0;
+}
+
+#alien {
+    position: fixed;
+    top: 0;
+    left: 0;
+    font-size: 32px;
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    z-index: 1000;
+    will-change: transform;
+}
+
+@media (max-width: 600px) {
+    body { margin: 15px; }
+    h1 { font-size: 16px; }
+    h3, p, a { font-size: 14px; }
+}
+</style>
+</head>
+<body>
+
+<h1>Francesco Biasi</h1>
+
+<h3>[news]</h3>
+<p><a href="https://www.contretype.org/transparences-liquides" target="_blank">Transparences liquides @contretype</a></p>
+<p><a href="https://biasi.fun/projects/project8.html" target="_blank">Handshake protocol (pending)</a></p>
+<p><a href="https://31241-2014.notion.site/26-09-2026-3d4807b635d480509f57c48f160960a2" target="_blank">26.09.26</a></p>
+
+<h3>[soon]</h3>
+<p><a href="https://www.cpif.net/fr/programme/reinventer-la-photographie-ess-1" target="_blank">Réinventer la photographie @cpif</a></p>
+
+<h3>[about]</h3>
+<p><a href="https://biasi.fun" target="_blank">this website</a></p>
+
+<h3>[reach out]</h3>
+<p>f [at] biasi [dot] fun</p>
+
+<div id="alien">👾</div>
+
+<script>
+(function () {
+    var el = document.getElementById('alien');
+    var x = 50, y = 50, vx = 2, vy = 1.6;
+    function frame() {
+        var w = document.documentElement.clientWidth - el.offsetWidth;
+        var h = window.innerHeight - el.offsetHeight;
+        x += vx;
+        y += vy;
+        if (x <= 0) { x = 0; vx = Math.abs(vx); }
+        if (x >= w) { x = Math.max(w, 0); vx = -Math.abs(vx); }
+        if (y <= 0) { y = 0; vy = Math.abs(vy); }
+        if (y >= h) { y = Math.max(h, 0); vy = -Math.abs(vy); }
+        el.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+        requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+})();
+</script>
+
+</body>
+</html>

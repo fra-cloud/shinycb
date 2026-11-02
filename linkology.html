@@ -44,7 +44,7 @@ p {
     margin: 0 0 10px 0;
 }
 
-#alien {
+.alien {
     position: fixed;
     top: 0;
     left: 0;
@@ -77,29 +77,56 @@ p {
 <p><a href="https://www.cpif.net/fr/programme/reinventer-la-photographie-ess-1" target="_blank">Réinventer la photographie @cpif</a></p>
 
 <h3>[about]</h3>
-<p><a href="https://biasi.fun" target="_blank">this website</a></p>
+<p><a href="https://biasi.fun" target="_blank">biasi.fun</a></p>
 
 <h3>[reach out]</h3>
 <p>f [at] biasi [dot] fun</p>
 
-<div id="alien">👾</div>
-
 <script>
 (function () {
-    var el = document.getElementById('alien');
-    var x = 50, y = 50, vx = 2, vy = 1.6;
+    var MAX_ALIENS = 128;
+    var aliens = [];
+
+    function viewW() { return document.documentElement.clientWidth; }
+    function viewH() { return window.innerHeight; }
+
+    function rand(min, max) { return min + Math.random() * (max - min); }
+
+    function spawn() {
+        var el = document.createElement('div');
+        el.className = 'alien';
+        el.textContent = '👾';
+        document.body.appendChild(el);
+        var a = {
+            el: el,
+            bounces: 0,
+            x: rand(0, Math.max(viewW() - el.offsetWidth, 0)),
+            y: rand(0, Math.max(viewH() - el.offsetHeight, 0)),
+            vx: (Math.random() < 0.5 ? -1 : 1) * rand(1.4, 2.4),
+            vy: (Math.random() < 0.5 ? -1 : 1) * rand(1.2, 2.2)
+        };
+        aliens.push(a);
+    }
+
     function frame() {
-        var w = document.documentElement.clientWidth - el.offsetWidth;
-        var h = window.innerHeight - el.offsetHeight;
-        x += vx;
-        y += vy;
-        if (x <= 0) { x = 0; vx = Math.abs(vx); }
-        if (x >= w) { x = Math.max(w, 0); vx = -Math.abs(vx); }
-        if (y <= 0) { y = 0; vy = Math.abs(vy); }
-        if (y >= h) { y = Math.max(h, 0); vy = -Math.abs(vy); }
-        el.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+        var n = aliens.length;
+        for (var i = 0; i < n; i++) {
+            var a = aliens[i];
+            var w = Math.max(viewW() - a.el.offsetWidth, 0);
+            var h = Math.max(viewH() - a.el.offsetHeight, 0);
+            var hit = false;
+            a.x += a.vx;
+            a.y += a.vy;
+            if (a.x <= 0) { a.x = 0; a.vx = Math.abs(a.vx); hit = true; }
+            if (a.x >= w) { a.x = w; a.vx = -Math.abs(a.vx); hit = true; }
+            if (a.y <= 0) { a.y = 0; a.vy = Math.abs(a.vy); hit = true; }
+            if (a.y >= h) { a.y = h; a.vy = -Math.abs(a.vy); hit = true; }
+            a.el.style.transform = 'translate(' + a.x + 'px,' + a.y + 'px)';
+        }
         requestAnimationFrame(frame);
     }
+
+    spawn();
     requestAnimationFrame(frame);
 })();
 </script>
